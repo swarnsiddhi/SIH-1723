@@ -6,10 +6,20 @@
     <title>Prediction App</title>
 </head>
 <body>
-    <h1>Upload CSV for Prediction</h1>
-    <form action="/predict" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" required>
-        <button type="submit">Predict</button>
+    <h1>Run Prediction</h1>
+    <p>The system will automatically run predictions based on the latest data in <strong>scaled_data.csv</strong>.</p>
+    <form action="/predict" method="get">
+        <button type="submit">Run Prediction</button>
     </form>
+    <hr>
+    <h2>Prediction Results</h2>
+    <!-- The results will be displayed here if available -->
+    {% if elongation is not none and uts is not none and conductivity is not none %}
+        <p><strong>Elongation:</strong> {{ elongation }}</p>
+        <p><strong>UTS:</strong> {{ uts }}</p>
+        <p><strong>Conductivity:</strong> {{ conductivity }}</p>
+    {% else %}
+        <p>No predictions available yet. Please run the prediction.</p>
+    {% endif %}
 </body>
 </html>
