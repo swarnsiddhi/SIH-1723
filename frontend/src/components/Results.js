@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Results = () => {
-  const [results, setResults] = useState(null);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await axios.get('/api/final_prediction');
-        setResults(response.data);
+        const response = await axios.get('http://localhost:5000/final_prediction');
+        setData(response.data);
       } catch (error) {
         console.error('Error fetching results:', error);
+        alert('Error fetching results.');
       }
     };
-
     fetchResults();
   }, []);
 
   return (
     <div>
       <h2>Results</h2>
-      {results ? (
-        <pre>{JSON.stringify(results, null, 2)}</pre>
+      {data ? (
+        <pre>{JSON.stringify(data, null, 2)}</pre>
       ) : (
         <p>Loading...</p>
       )}
