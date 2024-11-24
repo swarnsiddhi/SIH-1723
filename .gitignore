@@ -61,7 +61,6 @@ __pycache__/
 runs/
 logs/
 checkpoints/
-models/
 
 # Ignore your dataset structure (specific to your use case)
 dataset/images/train/spoiled/

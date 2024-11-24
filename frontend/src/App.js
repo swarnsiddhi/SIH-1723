@@ -1,32 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import ManualInput from './components/ManualInput';
-import Predictions from './components/Predictions';
-import Results from './components/Results';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import PredictionPage from './pages/PredictionPage';
 
-function App() {
-  return (
-    <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/predictions">Predictions</Link>
-            </li>
-          </ul>
-        </nav>
-
-        <Routes>
-          <Route path="/" element={<ManualInput />} />
-          <Route path="/predictions" element={<Predictions />} />
-          <Route path="/results" element={<Results />} />
-        </Routes>
-      </div>
-    </Router>
-  );
-}
+const App = () => {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/predict" element={<PredictionPage />} />
+            </Routes>
+        </Router>
+    );
+};
 
 export default App;
