@@ -1,0 +1,48 @@
+/* General styles for the entire page */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  color: #e5e7eb;
+  background: linear-gradient(to bottom right, #010102, #111827);
+  overflow: hidden;
+}
+
+/* Main content area */
+main {
+  padding: 20px;
+  background: linear-gradient(to bottom right, #030303, #1a202c);
+  border-left: 1px solid #090c0f;
+}
+
+h1 {
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+p {
+  color: #d1d5db;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.bg-gradient-to-br {
+  background: linear-gradient(to bottom right, #2d3748, #1a202c);
+}
+
+.text-neutral-200 {
+  color: #e5e7eb;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-gray-300 {
+  color: #d1d5db;
+}
+
+.hover\:text-gray-400:hover {
+  color: #9ca3af;
+}

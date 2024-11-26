@@ -25,6 +25,7 @@ const PredictionPage = () => {
 
     const handlePredict = async () => {
         try {
+            await saveFeatures(features);
             const response = await getFinalPrediction(features);
             setResults(response.data);
         } catch (err) {

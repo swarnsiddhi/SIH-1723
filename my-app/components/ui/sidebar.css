@@ -1,0 +1,129 @@
+/* General Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #121212, #282828);
+  color: #ffffff;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.dark-mode {
+  background: linear-gradient(135deg, #0f0f0f, #1f1f1f);
+  color: #e0e0e0;
+}
+
+/* Navbar Styles */
+nav {
+  background: linear-gradient(135deg, #ffffff, #f8f8f8);
+  border-radius: 9999px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+}
+
+nav.dark-mode {
+  background: linear-gradient(135deg, #212121, #3a3a3a);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* MenuItem Styles */
+.menu-item {
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+}
+
+.menu-item p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.menu-item:hover p {
+  opacity: 0.9;
+}
+
+.menu-item .submenu {
+  position: absolute;
+  top: calc(100% + 1.2rem);
+  left: 50%;
+  transform: translateX(-50%);
+  padding-top: 1rem;
+  display: none;
+}
+
+.menu-item:hover .submenu {
+  display: block;
+}
+
+.submenu {
+  background: linear-gradient(135deg, #ffffff, #e6e6e6);
+  border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  padding: 0.75rem;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.submenu.dark-mode {
+  background: linear-gradient(135deg, #1a1a1a, #333333);
+}
+
+/* ProductItem Styles */
+.product-item {
+  display: flex;
+  align-items: center;
+}
+
+.product-item img {
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.product-item h4 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.product-item p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+  transition: color 0.3s ease;
+}
+
+.product-item p.dark-mode {
+  color: #d1d5db;
+}
+
+/* HoveredLink Styles */
+.hovered-link {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #6b7280;
+  transition: color 0.3s ease;
+}
+
+.hovered-link:hover {
+  color: #000000;
+}
+
+.dark-mode .hovered-link {
+  color: #a1a1a1;
+}
+
+.dark-mode .hovered-link:hover {
+  color: #ffffff;
+}
