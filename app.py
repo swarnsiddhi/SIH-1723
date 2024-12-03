@@ -55,7 +55,7 @@ def save_features():
 
 @app.route('/api/final_prediction', methods=['GET'])
 def final_prediction():
-    ingest = DataIngestion(url='https://docs.google.com/spreadsheets/d/1eqNiMixvg9GqAOzCBoQPNG7fpYb9pE9chQuNxl9-8Sk/export?format=csv', save_path='data/processed/uploaded_files/input_data.csv')
+    ingest = DataIngestion(url='https://docs.google.com/spreadsheets/d/1i5SKBS7lr6nBPC2OTOF8Bj6sXiWAcKEj58Vg7ssdaKQ/export?format=csv', save_path='data/processed/uploaded_files/input_data.csv')
     ingest.ingest_data()
 
     preprocess = Preprocessing()
@@ -67,9 +67,9 @@ def final_prediction():
     model_eval = ModelEvalPredict(feature_csv=input_csv_path)
     elongation, uts, conductivity = model_eval.run_prediction()
 
-    elongation = float(elongation)
-    uts = float(uts)
-    conductivity = float(conductivity)
+    elongation = float(elongation[9])
+    uts = float(uts[9])
+    conductivity = float(conductivity[9])
 
     intermediate_csv_path = 'data/processed/uploaded_files/intermediate_features.csv'
     desired_csv_path = 'data/processed/uploaded_files/desired_values.csv'
@@ -82,33 +82,51 @@ def final_prediction():
     pd.DataFrame(output_data).to_csv(intermediate_csv_path, index=False)
 
     model_eval_mini = ModelEvalMiniPredict(feature_csv=desired_csv_path)
-    A,B,C,D,E,F,G,H,I = model_eval_mini.run_prediction()
+    results = model_eval_mini.run_pipeline()
     
     # Fetch original values
     original = pd.read_csv('data/processed/uploaded_files/input_data.csv').iloc[-1:]
     original_values = {
-        "A": original['Aluminum Purity (%)'].values[0],
-        "B": original['Casting Temperature (°C)'].values[0],
-        "C": original['Cooling Water Temperature (°C)'].values[0],
-        "D": original['Casting Speed (m/min)'].values[0],
-        "E": original['Cast Bar Entry Temperature at Rolling Mill (°C)'].values[0],
-        "F": original['Emulsion Temperature at Rolling Mill (°C)'].values[0],
-        "G": original['Emulsion Pressure at Rolling Mill (bar)'].values[0],
-        "H": original['Emulsion Concentration (%)'].values[0],
-        "I": original['Rod Quench Water Pressure (bar)'].values[0]
+        "A": original['EMUL_OIL_L_TEMP_PV_VAL0'].values[0],
+        "B": original['STAND_OIL_L_TEMP_PV_REAL_VAL0'].values[0],
+        "C": original['GEAR_OIL_L_TEMP_PV_REAL_VAL0'].values[0],
+        "D": original['EMUL_OIL_L_PR_VAL0'].values[0],
+        "E": original['QUENCH_CW_FLOW_EXIT_VAL0'].values[0],
+        "F": original['CAST_WHEEL_RPM_VAL0'].values[0],
+        "G": original['BAR_TEMP_VAL0'].values[0],
+        "H": original['QUENCH_CW_FLOW_ENTRY_VAL0'].values[0],
+        "I": original['GEAR_OIL_L_PR_VAL0'].values[0],
+        "J": original['STANDS_OIL_L_PR_VAL0'].values[0],
+        "K": original['TUNDISH_TEMP_VAL0'].values[0],
+        "L": original['BATH_TEMP_F7_VAL0'].values[0],
+        "M": original['BATH_TEMP_F8_VAL0'].values[0],
+        "N": original['RM_MOTOR_COOL_WATER__VAL0'].values[0],
+        "O": original['ROLL_MILL_AMPS_VAL0'].values[0],
+        "P": original['RM_COOL_WATER_FLOW_VAL0'].values[0],
+        "Q": original['EMULSION_LEVEL_ANALO_VAL0'].values[0],
+        "R": original['pctAL'].values[0]
     }
     
     # Calculate differences
     differences = {
-        "A": original_values["A"] - A,
-        "B": original_values["B"] - B,
-        "C": original_values["C"] - C,
-        "D": original_values["D"] - D,
-        "E": original_values["E"] - E,
-        "F": original_values["F"] - F,
-        "G": original_values["G"] - G,
-        "H": original_values["H"] - H,
-        "I": original_values["I"] - I
+        "A": original_values["A"] - results['EMUL_OIL_L_TEMP_PV_VAL0'],
+        "B": original_values["B"] - results['STAND_OIL_L_TEMP_PV_REAL_VAL0'],
+        "C": original_values["C"] - results['GEAR_OIL_L_TEMP_PV_REAL_VAL0'],
+        "D": original_values["D"] - results['EMUL_OIL_L_PR_VAL0'],
+        "E": original_values["E"] - results['QUENCH_CW_FLOW_EXIT_VAL0'],
+        "F": original_values["F"] - results['CAST_WHEEL_RPM_VAL0'],
+        "G": original_values["G"] - results['BAR_TEMP_VAL0'],
+        "H": original_values["H"] - results['QUENCH_CW_FLOW_ENTRY_VAL0'],
+        "I": original_values["I"] - results['GEAR_OIL_L_PR_VAL0'],
+        "J": original_values["J"] - results['STANDS_OIL_L_PR_VAL0'],
+        "K": original_values["K"] - results['TUNDISH_TEMP_VAL0'],
+        "L": original_values["L"] - results['BATH_TEMP_F7_VAL0'],
+        "M": original_values["M"] - results['BATH_TEMP_F8_VAL0'],
+        "N": original_values["N"] - results['RM_MOTOR_COOL_WATER__VAL0'],
+        "O": original_values["O"] - results['ROLL_MILL_AMPS_VAL0'],
+        "P": original_values["P"] - results['RM_COOL_WATER_FLOW_VAL0'],
+        "Q": original_values["Q"] - results['EMULSION_LEVEL_ANALO_VAL0'],
+        "R": original_values["R"] - results['pctAL']
     }
     
     response = {

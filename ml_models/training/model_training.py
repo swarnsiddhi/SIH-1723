@@ -33,7 +33,7 @@ class Training:
         
         # Paths to save results and models
         self.results_path = Path.cwd() / 'results'
-        self.model_path = Path.cwd() / 'ml_models' / 'models'
+        self.model_path = Path.cwd() / 'ml_models' / 'models' /'forward'
         
         # Create directories if they don't exist
         self.results_path.mkdir(parents=True, exist_ok=True)
@@ -183,18 +183,18 @@ class Training:
 
 if __name__ == "__main__":
     # Load data
-    X_train = pd.read_csv('data/processed/forward/X_train_E.csv')
-    X_test = pd.read_csv('data/processed/forward/X_test_E.csv')
-    y_train = pd.read_csv('data/processed/forward/y_train_E.csv').squeeze()
-    y_test = pd.read_csv('data/processed/forward/y_test_E.csv').squeeze()
-    A_train = pd.read_csv('data/processed/forward/A_train_UTS.csv')
-    A_test = pd.read_csv('data/processed/forward/A_test_UTS.csv')
-    b_train = pd.read_csv('data/processed/forward/b_train_UTS.csv').squeeze()
-    b_test = pd.read_csv('data/processed/forward/b_test_UTS.csv').squeeze()
-    R_train = pd.read_csv('data/processed/forward/R_train_C.csv')
-    R_test = pd.read_csv('data/processed/forward/R_test_C.csv')
-    s_train = pd.read_csv('data/processed/forward/s_train_C.csv').squeeze()
-    s_test = pd.read_csv('data/processed/forward/s_test_C.csv').squeeze()
+    X_train = pd.read_csv('data/processed/forward/X_train_Elongation.csv')
+    X_test = pd.read_csv('data/processed/forward/X_test_Elongation.csv')
+    y_train = pd.read_csv('data/processed/forward/y_train_Elongation.csv').squeeze()
+    y_test = pd.read_csv('data/processed/forward/y_test_Elongation.csv').squeeze()
+    A_train = pd.read_csv('data/processed/forward/X_train_UTS.csv')
+    A_test = pd.read_csv('data/processed/forward/X_test_UTS.csv')
+    b_train = pd.read_csv('data/processed/forward/y_train_UTS.csv').squeeze()
+    b_test = pd.read_csv('data/processed/forward/y_test_UTS.csv').squeeze()
+    R_train = pd.read_csv('data/processed/forward/X_train_Conductivity.csv')
+    R_test = pd.read_csv('data/processed/forward/X_test_Conductivity.csv')
+    s_train = pd.read_csv('data/processed/forward/y_train_Conductivity.csv').squeeze()
+    s_test = pd.read_csv('data/processed/forward/y_test_Conductivity.csv').squeeze()
 
     training = Training(X_train, X_test, y_train, y_test, A_train, A_test, b_train, b_test, R_train, R_test, s_train, s_test)
     training.run_training()

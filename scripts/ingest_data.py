@@ -31,7 +31,7 @@ class DataIngestion:
             print(f"An error occurred during data ingestion: {e}")
 
 # Example usage
-url = "https://docs.google.com/spreadsheets/d/1eqNiMixvg9GqAOzCBoQPNG7fpYb9pE9chQuNxl9-8Sk/export?format=csv"
+url = "https://docs.google.com/spreadsheets/d/1i5SKBS7lr6nBPC2OTOF8Bj6sXiWAcKEj58Vg7ssdaKQ/edit?usp=sharing"
 save_path = "data/processed/uploaded_files/input_data.csv"
 
 data_ingestion = DataIngestion(url, save_path)
