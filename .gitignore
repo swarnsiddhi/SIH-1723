@@ -72,5 +72,6 @@ yolov8_output/
 custom_output/
 
 # Ignore models in ml_models/models/forward and ml_models/models/backward
-ml_models/models/forward/
-ml_models/models/backward/
+ml_models/models/
+frontend/
+
