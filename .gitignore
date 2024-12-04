@@ -74,4 +74,3 @@ custom_output/
 # Ignore models in ml_models/models/forward and ml_models/models/backward
 ml_models/models/
 my-app/
-
