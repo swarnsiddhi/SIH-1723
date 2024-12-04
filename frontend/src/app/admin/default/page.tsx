@@ -1,25 +1,4 @@
 'use client';
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
-
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2022 Horizon UI (https://www.horizon-ui.com/)
-
-* Designed and Coded by Simmmple
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 
 import {
   Box,
@@ -52,13 +31,12 @@ import TotalSpent from 'views/admin/default/components/TotalSpent';
 import WeeklyRevenue from 'views/admin/default/components/WeeklyRevenue';
 import tableDataCheck from 'views/admin/default/variables/tableDataCheck';
 import tableDataComplex from 'views/admin/default/variables/tableDataComplex';
+import SwitchField from 'components/fields/SwitchField';
 import { useEffect, useState } from "react";
 // Assets
 import Usa from 'img/dashboards/usa.png';
 
 export default function Default() {
-  // Chakra Color Mode
-
   const brandColor = useColorModeValue('brand.500', 'white');
   const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
 
@@ -68,15 +46,17 @@ export default function Default() {
   const [tableDataCheck, setTableDataCheck] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isRealTimePredictionEnabled, setIsRealTimePredictionEnabled] = useState(false);
 
-  // Fetch data from the API
+  const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
+  // Fetch data for predictions and table
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         setError(null);
 
-        const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
         const response = await fetch(`${apiUrl}/api/final_prediction`);
         if (!response.ok) {
           throw new Error(`HTTP Error: ${response.status}`);
@@ -84,12 +64,10 @@ export default function Default() {
 
         const data = await response.json();
 
-        // Update values for the stats
         setUtsValue(data.predictions.uts || 0);
         setElongationValue(data.predictions.elongation || 0);
         setConductivityValue(data.predictions.conductivity || 0);
 
-        // Transform data for the table
         const updatedTableData = Object.keys(data.differences).map((key) => ({
           parameter: [key],
           original: data.original[key],
@@ -107,7 +85,13 @@ export default function Default() {
     };
 
     fetchData();
-  }, []);
+  }, [apiUrl]);
+
+  // Fetch the initial toggle state
+  
+
+  // Handle toggle change
+  
 
   if (loading) {
     return (
@@ -120,6 +104,15 @@ export default function Default() {
 
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
+      <SwitchField
+        reversed={true}
+        fontSize='sm'
+        mb='20px'
+        id='2'
+        label='Real Time Prediction'
+        isChecked={isRealTimePredictionEnabled}
+        onChange={handleToggleChange}
+      />
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, '2xl': 3 }}
         gap="20px"
@@ -132,7 +125,7 @@ export default function Default() {
               h="56px"
               bg={boxBg}
               icon={
-                <Icon w="64px" h="32px" as={MdBarChart} color={brandColor} />
+                <MdBarChart w="64px" h="32px" color={brandColor} />
               }
             />
           }
@@ -146,7 +139,7 @@ export default function Default() {
               h="56px"
               bg={boxBg}
               icon={
-                <Icon w="64px" h="32px" as={MdAttachMoney} color={brandColor} />
+                <MdAttachMoney w="64px" h="32px" color={brandColor} />
               }
             />
           }
@@ -160,7 +153,7 @@ export default function Default() {
               h="56px"
               bg={boxBg}
               icon={
-                <Icon w="64px" h="32px" as={MdFileCopy} color={brandColor} />
+                <MdFileCopy w="64px" h="32px" color={brandColor} />
               }
             />
           }
@@ -170,21 +163,19 @@ export default function Default() {
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
         <CheckTable tableData={tableDataCheck} />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
-          <DailyTraffic />
-          <PieCard />
-        </SimpleGrid>
+        <ComplexTable tableData={tableDataComplex} />
       </SimpleGrid>
-
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px" mb="20px">
         <TotalSpent />
         <WeeklyRevenue />
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
-        <ComplexTable tableData={tableDataComplex} />
+        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
+          <DailyTraffic />
+          <PieCard />
+        </SimpleGrid>
         <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
           <Tasks />
-          {/* <MiniCalendar h="100%" minW="100%" selectRange={false} /> */}
         </SimpleGrid>
       </SimpleGrid>
     </Box>

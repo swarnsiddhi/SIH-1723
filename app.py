@@ -1,17 +1,24 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for
+from flask import Flask, request, jsonify
 import pandas as pd
 import sqlite3
+from flask_cors import CORS
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.base import STATE_STOPPED
+import logging
 from ml_models.training.model_eval import Predict as ModelEvalPredict
 from ml_models.training.model_eval_mini import Predict as ModelEvalMiniPredict
 from scripts.ingest_data import DataIngestion
 from scripts.preprocess_data import Preprocessing
-from flask_cors import CORS
-
 
 app = Flask(__name__)
 CORS(app)
 
 DATABASE = 'features.db'
+scheduler = BackgroundScheduler()
+scheduler.start()
+
+# Toggle state to control the scheduler
+toggle_state = {"enabled": False}
 
 def init_db():
     conn = sqlite3.connect(DATABASE)
@@ -115,6 +122,38 @@ def final_prediction():
     }
 
     return jsonify(response)
+
+@app.route('/api/toggle_automation', methods=['POST'])
+def toggle_automation():
+    try:
+        global toggle_state
+        data = request.json
+        toggle_state["enabled"] = data.get("enabled", False)
+
+        # Define a wrapper function to run final_prediction with Flask's application context
+        def run_final_prediction():
+            with app.app_context():
+                final_prediction()
+
+        if toggle_state["enabled"]:
+            if scheduler.state == STATE_STOPPED:
+                scheduler.start()
+            scheduler.add_job(id='final_prediction_job',
+                              func=run_final_prediction,  # Use the wrapper function
+                              trigger='interval',
+                              seconds=10,
+                              replace_existing=True)
+        else:
+            scheduler.remove_job('final_prediction_job')
+
+        return jsonify({"message": f"Automation {'enabled' if toggle_state['enabled'] else 'disabled'}"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/get_toggle_state', methods=['GET'])
+def get_toggle_state():
+    return jsonify(toggle_state), 200
 
 
 if __name__ == '__main__':
