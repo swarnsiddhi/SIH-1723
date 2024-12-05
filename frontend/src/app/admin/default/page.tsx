@@ -12,9 +12,8 @@ import {
   Spinner,
   Text,
 } from '@chakra-ui/react';
-// Custom components
-// import MiniCalendar from 'components/calendar/MiniCalendar';
 import MiniStatistics from 'components/card/MiniStatistics';
+import Conversions from 'components/temperature/temperature';
 import IconBox from 'components/icons/IconBox';
 import {
   MdAddTask,
@@ -29,12 +28,9 @@ import PieCard from 'views/admin/default/components/PieCard';
 import Tasks from 'views/admin/default/components/Tasks';
 import TotalSpent from 'views/admin/default/components/TotalSpent';
 import WeeklyRevenue from 'views/admin/default/components/WeeklyRevenue';
-import tableDataCheck from 'views/admin/default/variables/tableDataCheck';
-import tableDataComplex from 'views/admin/default/variables/tableDataComplex';
 import SwitchField from 'components/fields/SwitchField';
 import { useEffect, useState } from "react";
-// Assets
-import Usa from 'img/dashboards/usa.png';
+import tableDataComplex from 'views/admin/dataTables/variables/tableDataComplex';
 
 export default function Default() {
   const brandColor = useColorModeValue('brand.500', 'white');
@@ -50,48 +46,55 @@ export default function Default() {
 
   const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
-  // Fetch data for predictions and table
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+  // Function to fetch data
+  const fetchData = async () => {
+    try {
+      setError(null);
 
-        const response = await fetch(`${apiUrl}/api/final_prediction`);
-        if (!response.ok) {
-          throw new Error(`HTTP Error: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        setUtsValue(data.predictions.uts || 0);
-        setElongationValue(data.predictions.elongation || 0);
-        setConductivityValue(data.predictions.conductivity || 0);
-
-        const updatedTableData = Object.keys(data.differences).map((key) => ({
-          parameter: [key],
-          original: data.original[key],
-          difference: data.differences[key],
-          lock: false,
-        }));
-
-        setTableDataCheck(updatedTableData);
-      } catch (error) {
-        console.error("Error fetching data:", error.message);
-        setError(error.message);
-      } finally {
-        setLoading(false);
+      const response = await fetch(`${apiUrl}/api/final_prediction`);
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`);
       }
-    };
 
+      const data = await response.json();
+
+      setUtsValue(data.predictions.uts || 0);
+      setElongationValue(data.predictions.elongation || 0);
+      setConductivityValue(data.predictions.conductivity || 0);
+
+      const updatedTableData = Object.keys(data.differences).map((key) => ({
+        parameter: [key],
+        original: data.original[key],
+        difference: data.differences[key],
+        lock: false,
+      }));
+
+      setTableDataCheck(updatedTableData);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Initial fetch
+  useEffect(() => {
     fetchData();
   }, [apiUrl]);
 
-  // Fetch the initial toggle state
-  
-
-  // Handle toggle change
-  
+  // Real-time prediction toggle effect
+  useEffect(() => {
+    let interval;
+    if (isRealTimePredictionEnabled) {
+      interval = setInterval(() => {
+        fetchData();
+      }, 10000); // Fetch every 10 seconds
+    } else {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isRealTimePredictionEnabled]);
 
   if (loading) {
     return (
@@ -106,67 +109,24 @@ export default function Default() {
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
       <SwitchField
         reversed={true}
-        fontSize='sm'
-        mb='20px'
-        id='2'
-        label='Real Time Prediction'
+        fontSize="sm"
+        mb="20px"
+        id="2"
+        label="Real Time Monitoring"
         isChecked={isRealTimePredictionEnabled}
-        onChange={handleToggleChange}
+        onChange={() => setIsRealTimePredictionEnabled((prev) => !prev)}
       />
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, '2xl': 3 }}
         gap="20px"
         mb="20px"
       >
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w="70px"
-              h="56px"
-              bg={boxBg}
-              icon={
-                <MdBarChart w="64px" h="32px" color={brandColor} />
-              }
-            />
-          }
-          name="Ultimate Tensile Strength"
-          value={`${utsValue}`}
-        />
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w="70px"
-              h="56px"
-              bg={boxBg}
-              icon={
-                <MdAttachMoney w="64px" h="32px" color={brandColor} />
-              }
-            />
-          }
-          name="Elongation"
-          value={`${elongationValue}`}
-        />
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w="70px"
-              h="56px"
-              bg={boxBg}
-              icon={
-                <MdFileCopy w="64px" h="32px" color={brandColor} />
-              }
-            />
-          }
-          name="Conductivity"
-          value={`${conductivityValue}`}
-        />
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
-        <CheckTable tableData={tableDataCheck} />
-        <ComplexTable tableData={tableDataComplex} />
+        <TotalSpent parameter="UTS" />
+        <TotalSpent parameter="Elongation" />
+        <TotalSpent parameter="Conductivity" />
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px" mb="20px">
-        <TotalSpent />
+        <ComplexTable tableData={tableDataComplex} />
         <WeeklyRevenue />
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
@@ -176,6 +136,7 @@ export default function Default() {
         </SimpleGrid>
         <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
           <Tasks />
+          <Conversions />
         </SimpleGrid>
       </SimpleGrid>
     </Box>

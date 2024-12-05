@@ -208,7 +208,7 @@ export const barChartOptionsUserActivity = {
 export const barChartDataConsumption = [
   {
     name: "PRODUCT A",
-    data: [400, 370, 330, 390, 320, 350, 360, 320, 380],
+    data: [200, 370, 330, 390, 320, 350, 360, 320, 380],
   },
   {
     name: "PRODUCT B",
@@ -362,7 +362,7 @@ export const lineChartDataTotalSpent = [
   },
 ];
 
-export const lineChartOptionsTotalSpent: ApexOptions = {
+export const getLineChartOptions = (categories: string[]): ApexOptions => ({
   chart: {
     toolbar: {
       show: false,
@@ -376,7 +376,7 @@ export const lineChartOptionsTotalSpent: ApexOptions = {
       color: "#4318FF",
     },
   },
-  colors: ["#4318FF", "#39B8FF"],
+  colors: ["#4318FF", "#39B8FF", "#FF5733"], // Add colors for all series
   markers: {
     size: 0,
     colors: "white",
@@ -399,12 +399,11 @@ export const lineChartOptionsTotalSpent: ApexOptions = {
     enabled: false,
   },
   stroke: {
-    curve: "smooth",
-    // type: "line",
+    curve: "smooth", // Keep smooth curves
+    width: 3,        // Ensure the line is thick enough to be visible
   },
   xaxis: {
-    // type: "numeric",
-    categories: ["SEP", "OCT", "NOV", "DEC", "JAN", "FEB"],
+    categories, // Dynamically set categories (e.g., dates)
     labels: {
       style: {
         colors: "#A3AED0",
@@ -428,9 +427,7 @@ export const lineChartOptionsTotalSpent: ApexOptions = {
   grid: {
     show: false,
     column: {
-      // color: ["#7551FF", "#39B8FF"],
       opacity: 0.5,
     },
   },
-  // color: ["#7551FF", "#39B8FF"],
-};
+});
