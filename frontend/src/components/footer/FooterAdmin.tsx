@@ -23,7 +23,7 @@ export default function Footer() {
         xl: 'start',
       }}
       justifyContent="space-between"
-      px={{ base: '30px', md: '50px' }}
+      px={{ base: '30px', md: '50px', lg: '40px' }}
       pb="30px"
     >
       <Text

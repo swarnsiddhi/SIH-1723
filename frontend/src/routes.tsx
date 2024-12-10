@@ -29,24 +29,24 @@ const routes: IRoute[] = [
     name: 'Production Dashboard',
     layout: '/admin',
     path: '/default',
-    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={MdHome} mt='6px' width="20px" height="20px" color="inherit" />,
   },
   {
     name: 'Simulation',
     layout: '/admin',
     path: '/prediction/form',
-    icon: <Icon as={MdScience} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={MdScience} mt='6px' width="20px" height="20px" color="inherit" />,
   },
   {
     name: 'Data Analysis',
     layout: '/admin',
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={MdBarChart} mt='6px' width="20px" height="20px" color="inherit" />,
     path: '/data-tables',
   },
   {
     name: 'Virtual Assistant',
     layout: '/admin',
-    icon: <Icon as={MdAutoAwesome} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={MdAutoAwesome} mt='6px' width="20px" height="20px" color="inherit" />,
     path: '/chat-ui',
   },
   {
@@ -55,7 +55,7 @@ const routes: IRoute[] = [
     path: '/nft-marketplace',
     icon: (
       <Icon
-        as={MdDisplaySettings}
+        mt='6px' as={MdDisplaySettings}
         width="20px"
         height="20px"
         color="inherit"
@@ -67,13 +67,13 @@ const routes: IRoute[] = [
     name: 'Profile',
     layout: '/admin',
     path: '/profile',
-    icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
+    icon: <Icon mt='6px' as={MdPerson} width="20px" height="20px" color="inherit" />,
   },
   {
     name: 'Sign In',
     layout: '/auth',
     path: '/sign-in',
-    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    icon: <Icon mt='6px' as={MdLock} width="20px" height="20px" color="inherit" />,
   },
 ];
 
