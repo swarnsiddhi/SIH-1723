@@ -28,10 +28,10 @@ export default function Banner(props: { used: number; total: number; [x: string]
 				bg={box}
 			/>
 			<Text color={textColorPrimary} fontWeight='bold' fontSize='2xl' mt='10px'>
-				Your storage
+				Your data
 			</Text>
-			<Text color={textColorSecondary} fontSize='md' maxW={{ base: '100%', xl: '80%', '3xl': '60%' }} mx='auto'>
-				Supervise your drive space in the easiest way
+			<Text color={textColorSecondary} align='center' fontSize='md' maxW={{ base: '100%', xl: '80%', '3xl': '60%' }} mx='auto'>
+				Your data is secure and stored locally
 			</Text>
 			<Box w='100%' mt='auto'>
 				<Flex w='100%' justify='space-between' mb='10px'>
