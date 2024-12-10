@@ -5,6 +5,12 @@ import {
   MdHome,
   MdLock,
   MdOutlineShoppingCart,
+  MdScience,
+  MdControlPoint,
+  MdControlCamera,
+  MdSystemUpdate,
+  MdDisplaySettings,
+  MdAutoAwesome,
 } from 'react-icons/md';
 
 // Admin Imports
@@ -20,30 +26,42 @@ import { IRoute } from 'types/navigation';
 
 const routes: IRoute[] = [
   {
-    name: 'Main Dashboard',
+    name: 'Production Dashboard',
     layout: '/admin',
     path: '/default',
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
   },
   {
-    name: 'NFT Marketplace',
+    name: 'Simulation',
+    layout: '/admin',
+    path: '/prediction/form',
+    icon: <Icon as={MdScience} width="20px" height="20px" color="inherit" />,
+  },
+  {
+    name: 'Data Analysis',
+    layout: '/admin',
+    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    path: '/data-tables',
+  },
+  {
+    name: 'Virtual Assistant',
+    layout: '/admin',
+    icon: <Icon as={MdAutoAwesome} width="20px" height="20px" color="inherit" />,
+    path: '/chat-ui',
+  },
+  {
+    name: 'System Control',
     layout: '/admin',
     path: '/nft-marketplace',
     icon: (
       <Icon
-        as={MdOutlineShoppingCart}
+        as={MdDisplaySettings}
         width="20px"
         height="20px"
         color="inherit"
       />
     ),
     secondary: true,
-  },
-  {
-    name: 'Data Tables',
-    layout: '/admin',
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-    path: '/data-tables',
   },
   {
     name: 'Profile',
@@ -56,18 +74,6 @@ const routes: IRoute[] = [
     layout: '/auth',
     path: '/sign-in',
     icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
-  },
-  {
-    name: 'RTL Admin',
-    layout: '/rtl',
-    path: '/rtl-default',
-    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
-  },
-  {
-    name: 'Prediction',
-    layout: '/admin',
-    path: '/prediction/form',
-    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
   },
 ];
 

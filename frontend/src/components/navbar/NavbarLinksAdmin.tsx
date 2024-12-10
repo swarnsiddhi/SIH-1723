@@ -39,7 +39,7 @@ export default function HeaderLinks(props: {
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const textColorBrand = useColorModeValue('brand.700', 'brand.400');
   const ethColor = useColorModeValue('gray.700', 'white');
-  const borderColor = useColorModeValue('#E6ECFA', 'rgba(135, 140, 189, 0.3)');
+  const borderColor = useColorModeValue('#E6ECFA', 'rgba(135, 140, 189, 1)');
   const ethBg = useColorModeValue('secondaryGray.300', 'navy.900');
   const ethBox = useColorModeValue('white', 'navy.800');
   const shadow = useColorModeValue(
@@ -148,7 +148,7 @@ export default function HeaderLinks(props: {
               borderRadius="8px"
               mb="10px"
             >
-              <ItemContent info="Horizon UI Dashboard PRO" />
+              <ItemContent info="Anomaly in Predicted Elongation" />
             </MenuItem>
             <MenuItem
               _hover={{ bg: 'none' }}
@@ -157,7 +157,7 @@ export default function HeaderLinks(props: {
               borderRadius="8px"
               mb="10px"
             >
-              <ItemContent info="Horizon Design System Free" />
+              <ItemContent info="Anomaly in Bar Temperature " />
             </MenuItem>
           </Flex>
         </MenuList>
@@ -189,7 +189,7 @@ export default function HeaderLinks(props: {
           <Flex flexDirection="column">
             <Link w="100%" href="https://horizon-ui.com/pro">
               <Button w="100%" h="44px" mb="10px" variant="brand">
-                Buy Horizon UI PRO
+                Explore the process
               </Button>
             </Link>
             <Link
@@ -211,7 +211,7 @@ export default function HeaderLinks(props: {
               w="100%"
               href="https://github.com/horizon-ui/horizon-ui-chakra-nextjs"
             >
-              <Button
+              {/* <Button
                 w="100%"
                 h="44px"
                 variant="no-hover"
@@ -219,7 +219,7 @@ export default function HeaderLinks(props: {
                 bg="transparent"
               >
                 Try Horizon Free
-              </Button>
+              </Button> */}
             </Link>
           </Flex>
         </MenuList>
@@ -255,7 +255,7 @@ export default function HeaderLinks(props: {
           />
           <Center top={0} left={0} position={'absolute'} w={'100%'} h={'100%'}>
             <Text fontSize={'xs'} fontWeight="bold" color={'white'}>
-              AP
+              SP
             </Text>
           </Center>
         </MenuButton>
@@ -279,7 +279,7 @@ export default function HeaderLinks(props: {
               fontWeight="700"
               color={textColor}
             >
-              👋&nbsp; Hey, Adela
+              👋&nbsp; Hey, Sanskar
             </Text>
           </Flex>
           <Flex flexDirection="column" p="10px">

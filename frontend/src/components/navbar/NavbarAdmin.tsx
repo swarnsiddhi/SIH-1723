@@ -42,11 +42,11 @@ export default function AdminNavbar (props: {
   let secondaryText = useColorModeValue('gray.700', 'white')
   let navbarPosition = 'fixed' as const
   let navbarFilter = 'none'
-  let navbarBackdrop = 'blur(20px)'
+  let navbarBackdrop = 'blur(12px)'
   let navbarShadow = 'none'
   let navbarBg = useColorModeValue(
     'rgba(244, 247, 254, 0.2)',
-    'rgba(11,20,55,0.5)'
+    'rgba(11,20,55,0.1)'
   )
   let navbarBorder = 'transparent'
   let secondaryMargin = '0px'
@@ -96,11 +96,11 @@ export default function AdminNavbar (props: {
       pt='8px'
       top={{ base: '12px', md: '16px', xl: '18px' }}
       w={{
-        base: 'calc(100vw - 6%)',
-        md: 'calc(100vw - 8%)',
-        lg: 'calc(100vw - 6%)',
+        base: 'calc(100vw - 4.5%)',
+        md: 'calc(100vw - 6.6%)',
+        lg: 'calc(100vw - 5.4%)',
         xl: 'calc(100vw - 350px)',
-        '2xl': 'calc(100vw - 365px)'
+        '2xl': 'calc(100vw - 350px)'
       }}
     >
       <Flex

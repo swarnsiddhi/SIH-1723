@@ -6,7 +6,7 @@ import Menu from 'components/menu/MainMenu';
 import IconBox from 'components/icons/IconBox';
 
 // Assets
-import { MdCheckBox, MdDragIndicator } from 'react-icons/md';
+import { MdAnalytics, MdCheckBox, MdDragIndicator } from 'react-icons/md';
 
 export default function Conversion(props: { [x: string]: any }) {
 	const { ...rest } = props;
@@ -23,7 +23,7 @@ export default function Conversion(props: { [x: string]: any }) {
 					w='38px'
 					h='38px'
 					bg={boxBg}
-					icon={<Icon as={MdCheckBox} color={brandColor} w='24px' h='24px' />}
+					icon={<Icon as={MdAnalytics} color={brandColor} w='24px' h='24px' />}
 				/>
 
 				<Text color={textColor} fontSize='lg' fontWeight='700'>

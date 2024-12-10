@@ -56,7 +56,7 @@ export default function SidebarDocs() {
           px="10px"
           mb="14px"
         >
-          Upgrade to PRO
+          Chat with Assistant
         </Text>
         <Text
           fontSize="14px"
@@ -65,8 +65,7 @@ export default function SidebarDocs() {
           mb="14px"
           textAlign="center"
         >
-          Improve your development process and start doing more with Horizon UI
-          PRO!
+          Enhance your user experience and get more done with our virtual AI assistant!
         </Text>
       </Flex>
       <Link href="https://horizon-ui.com/pro">
@@ -81,7 +80,7 @@ export default function SidebarDocs() {
           minW="185px"
           mx="auto"
         >
-          Upgrade to PRO
+          Chat Now
         </Button>
       </Link>
     </Flex>

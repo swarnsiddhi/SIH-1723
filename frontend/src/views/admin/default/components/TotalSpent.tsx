@@ -90,14 +90,14 @@ export default function TotalSpent(props: { parameter: string }) {
 				</Flex>
 			</Flex>
 			<Flex w="100%" flexDirection={{ base: 'column', lg: 'row' }}>
-				<Flex flexDirection="column" me="20px" mt="28px">
+				<Flex flexDirection="column" me="20px" mt="16px">
 					<Text color={textColor} fontSize="34px" textAlign="start" fontWeight="700" lineHeight="100%">
 					    {parameterValues[parameterValues.length - 1]?.value || 'N/A'}
 					</Text>
-					<Flex align="center" mb="20px">
+					<Flex align="center" mb="20px" mt="6px">
 						<Icon as={IoCheckmarkCircle} color="green.500" me="8px" />
-						<Text color="secondaryGray.600" fontSize="sm" fontWeight="500" mt="4px">
-							Data Synced
+						<Text color="secondaryGray.600" fontSize="sm" fontWeight="500">
+							Live
 						</Text>
 					</Flex>
 					<Box>

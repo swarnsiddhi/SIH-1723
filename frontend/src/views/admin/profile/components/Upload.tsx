@@ -29,7 +29,7 @@ export default function Upload(props: { used?: number; total?: number; [x: strin
 								</Text>
 							</Flex>
 							<Text fontSize='sm' fontWeight='500' color='secondaryGray.500'>
-								PNG, JPG and GIF files are allowed
+								Only Excel files are allowed
 							</Text>
 						</Box>
 					}
@@ -41,7 +41,7 @@ export default function Upload(props: { used?: number; total?: number; [x: strin
 						textAlign='start'
 						fontSize='2xl'
 						mt={{ base: '20px', '2xl': '50px' }}>
-						Complete your profile
+						Manually provide data
 					</Text>
 					<Text
 						color={textColorSecondary}
@@ -49,19 +49,18 @@ export default function Upload(props: { used?: number; total?: number; [x: strin
 						my={{ base: 'auto', '2xl': '10px' }}
 						mx='auto'
 						textAlign='start'>
-						Stay on the pulse of distributed projects with an anline whiteboard to plan, coordinate and
-						discuss
+						Streamline wire rod quality predictions by entering production data manually via Excel for ML processing.
 					</Text>
 					<Flex w='100%'>
 						<Button
-							me='100%'
+							
 							mb='50px'
 							w='140px'
 							minW='140px'
-							mt={{ base: '20px', '2xl': 'auto' }}
+							mt='20px'
 							variant='brand'
 							fontWeight='500'>
-							Publish now
+							Submit now
 						</Button>
 					</Flex>
 				</Flex>

@@ -83,39 +83,32 @@ export default function Default() {
     fetchData();
   }, [apiUrl]);
 
-  // Real-time prediction toggle effect
-  useEffect(() => {
-    let interval;
-    if (isRealTimePredictionEnabled) {
-      interval = setInterval(() => {
-        fetchData();
-      }, 10000); // Fetch every 10 seconds
-    } else {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [isRealTimePredictionEnabled]);
-
-  if (loading) {
-    return (
-      <Flex justify="center" align="center" h="100vh">
-        <Spinner size="xl" />
-        <Text ml="4">Loading data...</Text>
-      </Flex>
-    );
+ // Real-time prediction toggle effect
+ useEffect(() => {
+  let interval;
+  if (isRealTimePredictionEnabled) {
+    interval = setInterval(() => {
+      fetchData();
+    }, 10000); // Fetch every 10 seconds
+  } else {
+    clearInterval(interval);
   }
+  return () => clearInterval(interval);
+}, [isRealTimePredictionEnabled]);
+
+
+  // if (loading) {
+  //   return (
+  //     <Flex justify="center" align="center" h="100vh">
+  //       <Spinner size="xl" />
+  //       <Text ml="4">Loading data...</Text>
+  //     </Flex>
+  //   );
+  // }
 
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
-      <SwitchField
-        reversed={true}
-        fontSize="sm"
-        mb="20px"
-        id="2"
-        label="Real Time Monitoring"
-        isChecked={isRealTimePredictionEnabled}
-        onChange={() => setIsRealTimePredictionEnabled((prev) => !prev)}
-      />
+
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, '2xl': 3 }}
         gap="20px"
@@ -138,6 +131,15 @@ export default function Default() {
           <Tasks />
           <Conversions />
         </SimpleGrid>
+        <SwitchField
+        reversed={true}
+        fontSize="sm"
+        mb="20px"
+        id="2"
+        label="Real Time Monitoring"
+        isChecked={isRealTimePredictionEnabled}
+        onChange={() => setIsRealTimePredictionEnabled((prev) => !prev)}
+      />
       </SimpleGrid>
     </Box>
   );
