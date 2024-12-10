@@ -10,6 +10,7 @@ import {
   MdControlCamera,
   MdSystemUpdate,
   MdDisplaySettings,
+  MdAutoAwesome,
 } from 'react-icons/md';
 
 // Admin Imports
@@ -41,6 +42,12 @@ const routes: IRoute[] = [
     layout: '/admin',
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: '/data-tables',
+  },
+  {
+    name: 'Virtual Assistant',
+    layout: '/admin',
+    icon: <Icon as={MdAutoAwesome} width="20px" height="20px" color="inherit" />,
+    path: '/chat-ui',
   },
   {
     name: 'System Control',
