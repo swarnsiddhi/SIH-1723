@@ -68,7 +68,7 @@ export default function SidebarDocs() {
           Enhance your user experience and get more done with our virtual AI assistant!
         </Text>
       </Flex>
-      <Link href="https://horizon-ui.com/pro">
+      <Link href="http://localhost:3000/admin/chat-ui">
         <Button
           bg="whiteAlpha.300"
           _hover={{ bg: 'whiteAlpha.200' }}

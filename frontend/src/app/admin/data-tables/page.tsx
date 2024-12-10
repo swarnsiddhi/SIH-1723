@@ -1,29 +1,80 @@
 'use client';
-import { Box, SimpleGrid } from '@chakra-ui/react';
-import DevelopmentTable from 'views/admin/dataTables/components/DevelopmentTable';
-import CheckTable from 'views/admin/dataTables/components/CheckTable';
-import ColumnsTable from 'views/admin/dataTables/components/ColumnsTable';
-import ComplexTable from 'views/admin/dataTables/components/ComplexTable';
-import tableDataDevelopment from 'views/admin/dataTables/variables/tableDataDevelopment';
-import tableDataCheck from 'views/admin/dataTables/variables/tableDataCheck';
-import tableDataColumns from 'views/admin/dataTables/variables/tableDataColumns';
-import tableDataComplex from 'views/admin/dataTables/variables/tableDataComplex';
+import { Box, VStack, Text, Image } from '@chakra-ui/react';
 import React from 'react';
-import AdminLayout from 'layouts/admin';
 
 export default function DataTables() {
+  const images = [
+    {
+      src: '/img/EDA/Corr_heatmap.png',
+      text: 'Correlation Heatmap',
+    },
+    {
+      src: '/img/EDA/Featue_sans.png',
+      text: 'Feature Sans Analysis',
+    },
+    {
+      src: '/img/EDA/Feature_C_sans.png',
+      text: 'Feature C Sans Analysis',
+    },
+    {
+      src: '/img/EDA/feature_dist.png',
+      text: 'Feature Distribution',
+    },
+    {
+      src: '/img/EDA/Feature_E_sans.png',
+      text: 'Feature E Sans Analysis',
+    },
+    {
+      src: '/img/EDA/Feature_U_sans.png',
+      text: 'Feature U Sans Analysis',
+    },
+    {
+      src: '/img/EDA/target_distribution.png',
+      text: 'Target Distribution',
+    },
+  ];                    
+
   return (
-    <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
-      <SimpleGrid
-        mb="20px"
-        columns={{ sm: 1, md: 2 }}
-        spacing={{ base: '20px', xl: '20px' }}
-      >
-        <DevelopmentTable tableData={tableDataDevelopment} />
-        <CheckTable tableData={tableDataCheck} />
-        <ColumnsTable tableData={tableDataColumns} />
-        <ComplexTable tableData={tableDataComplex} />
-      </SimpleGrid>
+    <Box borderRadius='20px' mt='80px' bg="white">
+      {/* Page Header */}
+      <Text fontSize="2xl" fontWeight="bold" pt='20px' mb="20px" textAlign="left" ml='40px '>
+        Exploratory Data Analysis
+      </Text>
+      <Box
+        w="100%"
+        h="1px"
+        bg="gray.200"
+        my="10px"
+      />
+      {/* Vertical Stack for Cards */}
+      <VStack spacing="20px" px={{ base: '20px', lg: '40px' }}>
+        {images.map((image, index) => (
+          <Box
+            key={index}
+            bg="white"
+            borderRadius="15px"
+            boxShadow="none"
+            overflow="hidden"
+            p="20px"
+            w="100%" // Make card take full width of container
+            maxW="800px" // Limit card width
+          >
+            {/* Image */}
+            <Image
+              src={image.src}
+              alt={`Image ${index + 1}`}
+              objectFit="cover"
+              w="100%"
+              borderRadius="12px"
+              mb="15px"
+            />
+            {/* Description */}
+            <Text fontSize="sm" color="gray.500" textAlign="center">
+              {image.text}
+            </Text>
+          </Box>
+        ))}
+      </VStack>
     </Box>
   );
 }
