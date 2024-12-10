@@ -1,61 +1,28 @@
 'use client';
-import { Box, VStack, Text, Image } from '@chakra-ui/react';
+import { Box, Text, Image, VStack } from '@chakra-ui/react';
 import React from 'react';
 
 export default function DataTables() {
   const images = [
-    {
-      src: '/img/EDA/Corr_heatmap.png',
-      text: 'Correlation Heatmap',
-    },
-    {
-      src: '/img/EDA/Featue_sans.png',
-      text: 'Feature Sans Analysis',
-    },
-    {
-      src: '/img/EDA/Featue_sans.png',
-      text: 'Feature Sans Analysis',
-    },
-    {
-      src: '/img/EDA/Featue_sans.png',
-      text: 'Feature Sans Analysis',
-    },
-    {
-      src: '/img/EDA/Feature_C_sans.png',
-      text: 'Feature C Sans Analysis',
-    },
-    {
-      src: '/img/EDA/Feature_E_sans.png',
-      text: 'Feature E Sans Analysis',
-    },
-    {
-      src: '/img/EDA/feature_dist.png',
-      text: 'Feature Distribution',
-    },
-    {
-      src: '/img/EDA/Feature_U_sans.png',
-      text: 'Feature U Sans Analysis',
-    },
-    {
-      src: '/img/EDA/target_distribution.png',
-      text: 'Target Distribution',
-    },
-  ];                    
+    { src: '/img/EDA/Corr_heatmap.png', text: 'Correlation Heatmap' },
+    { src: '/img/EDA/all_features.png', text: 'Feature Sans Analysis' },
+    { src: '/img/EDA/Conductivity.png', text: 'Feature Sans Analysis' },
+    { src: '/img/EDA/Elongation.png', text: 'Feature Sans Analysis' },
+    { src: '/img/EDA/UTS.png', text: 'Feature C Sans Analysis' },
+    { src: '/img/EDA/feature_dist.png', text: 'Feature Distribution' },
+    { src: '/img/EDA/target_distribution.png', text: 'Target Distribution' },
+  ];
 
   return (
-    <Box borderRadius='20px' mt='80px' bg="white">
+    <Box borderRadius="20px" mt="80px" bg="white" px={{ base: '20px', lg: '40px' }} py="20px">
       {/* Page Header */}
-      <Text fontSize="2xl" fontWeight="bold" pt='20px' mb="20px" textAlign="left" ml='40px '>
+      <Text fontSize="2xl" fontWeight="bold" mb="20px" textAlign="left">
         Exploratory Data Analysis
       </Text>
-      <Box
-        w="100%"
-        h="1px"
-        bg="gray.200"
-        my="10px"
-      />
-      {/* Vertical Stack for Cards */}
-      <VStack spacing="20px" px={{ base: '20px', lg: '40px' }}>
+      <Box w="100%" h="1px" bg="gray.200" mb="20px" />
+
+      {/* Vertical Stack for Images */}
+      <VStack spacing={8} align="stretch">
         {images.map((image, index) => (
           <Box
             key={index}
@@ -63,9 +30,8 @@ export default function DataTables() {
             borderRadius="15px"
             boxShadow="none"
             overflow="hidden"
+            textAlign="center"
             p="20px"
-            w="100%" // Make card take full width of container
-            maxW="800px" // Limit card width
           >
             {/* Image */}
             <Image
@@ -77,7 +43,7 @@ export default function DataTables() {
               mb="15px"
             />
             {/* Description */}
-            <Text fontSize="sm" color="gray.500" textAlign="center">
+            <Text fontSize="md" color="gray.700" fontWeight="medium">
               {image.text}
             </Text>
           </Box>
