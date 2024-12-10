@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 // Chakra imports
 import {
   Box,
@@ -16,6 +16,7 @@ import {
   InputRightElement,
   Text,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react';
 // Custom components
 import { HSeparator } from 'components/separator/Separator';
@@ -25,6 +26,7 @@ import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
+import { useRouter } from 'next/navigation';
 
 export default function SignIn() {
   // Chakra color mode
@@ -43,8 +45,97 @@ export default function SignIn() {
     { bg: 'secondaryGray.300' },
     { bg: 'whiteAlpha.200' },
   );
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
+  const [captchaInput, setCaptchaInput] = useState('');
+  const [captchaText, setCaptchaText] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const canvasRef = useRef(null);
+  const toast = useToast();
+  const router = useRouter();
+
   const handleClick = () => setShow(!show);
+
+  const generateCaptchaText = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let text = '';
+    for (let i = 0; i < 6; i++) {
+      text += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return text;
+  };
+
+  const generateCaptcha = () => {
+    const text = generateCaptchaText();
+    setCaptchaText(text);
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas dimensions
+    const width = 150;
+    const height = 50;
+    canvas.width = width;
+    canvas.height = height;
+
+    // Draw background
+    ctx.fillStyle = '#f0f0f0';
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw CAPTCHA text
+    ctx.font = '30px sans-serif';
+    ctx.fillStyle = '#000';
+    ctx.fillText(text, 20, 35);
+
+    // Add noise (optional)
+    for (let i = 0; i < 5; i++) {
+      ctx.strokeStyle = `rgba(0, 0, 0, ${Math.random()})`;
+      ctx.beginPath();
+      ctx.moveTo(Math.random() * width, Math.random() * height);
+      ctx.lineTo(Math.random() * width, Math.random() * height);
+      ctx.stroke();
+    }
+  };
+
+  useEffect(() => {
+    generateCaptcha();
+  }, []);
+
+  const handleSignIn = () => {
+    const hardcodedEmail = 'demo@example.com';
+    const hardcodedPassword = 'password123';
+
+    if (email === hardcodedEmail && password === hardcodedPassword) {
+      if (captchaInput === captchaText) {
+        toast({
+          title: 'Login Successful',
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        });
+        router.push('/admin/default');
+      } else {
+        toast({
+          title: 'CAPTCHA Verification Failed',
+          description: 'Incorrect CAPTCHA text',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+        generateCaptcha();
+        setCaptchaInput('');
+      }
+    } else {
+      toast({
+        title: 'Login Failed',
+        description: 'Invalid email or password',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <DefaultAuthLayout illustrationBackground={'/img/auth/auth.png'}>
       <Flex
@@ -57,7 +148,7 @@ export default function SignIn() {
         justifyContent="center"
         mb={{ base: '30px', md: '60px' }}
         px={{ base: '25px', md: '0px' }}
-        mt={{ base: '40px', md: '14vh' }}
+        mt={{ base: '20px', md: '14vh' }}
         flexDirection="column"
       >
         <Box me="auto">
@@ -130,6 +221,8 @@ export default function SignIn() {
               mb="24px"
               fontWeight="500"
               size="lg"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <FormLabel
               ms="4px"
@@ -149,6 +242,8 @@ export default function SignIn() {
                 size="lg"
                 type={show ? 'text' : 'password'}
                 variant="auth"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <InputRightElement display="flex" alignItems="center" mt="4px">
                 <Icon
@@ -159,6 +254,17 @@ export default function SignIn() {
                 />
               </InputRightElement>
             </InputGroup>
+            <Flex justifyContent="center" mb="24px">
+              <canvas ref={canvasRef} />
+            </Flex>
+            <FormControl mb="24px">
+              <Input
+                type="text"
+                placeholder="Enter the CAPTCHA text"
+                value={captchaInput}
+                onChange={(e) => setCaptchaInput(e.target.value)}
+              />
+            </FormControl>
             <Flex justifyContent="space-between" align="center" mb="24px">
               <FormControl display="flex" alignItems="center">
                 <Checkbox
@@ -179,8 +285,8 @@ export default function SignIn() {
               <Link href="/auth/forgot-password">
                 <Text
                   color={textColorBrand}
-                  fontSize="sm"
                   w="124px"
+                  fontSize="sm"
                   fontWeight="500"
                 >
                   Forgot password?
@@ -194,6 +300,7 @@ export default function SignIn() {
               w="100%"
               h="50"
               mb="24px"
+              onClick={handleSignIn}
             >
               Sign In
             </Button>
@@ -205,19 +312,14 @@ export default function SignIn() {
             maxW="100%"
             mt="0px"
           >
-            <Link href="/auth/sign-up">
-              <Text color={textColorDetails} fontWeight="400" fontSize="14px">
-                Not registered yet?
-                <Text
-                  color={textColorBrand}
-                  as="span"
-                  ms="5px"
-                  fontWeight="500"
-                >
+            <Text color={textColorDetails} fontWeight="400" fontSize="14px">
+              Not registered yet?
+              <Link href="/auth/sign-up">
+                <Text color={textColorBrand} as="span" ms="5px" fontWeight="500">
                   Create an Account
                 </Text>
-              </Text>
-            </Link>
+              </Link>
+            </Text>
           </Flex>
         </Flex>
       </Flex>
