@@ -83,6 +83,19 @@ export default function Default() {
     fetchData();
   }, [apiUrl]);
 
+ // Real-time prediction toggle effect
+ useEffect(() => {
+  let interval;
+  if (isRealTimePredictionEnabled) {
+    interval = setInterval(() => {
+      fetchData();
+    }, 10000); // Fetch every 10 seconds
+  } else {
+    clearInterval(interval);
+  }
+  return () => clearInterval(interval);
+}, [isRealTimePredictionEnabled]);
+
 
   // if (loading) {
   //   return (
@@ -118,6 +131,15 @@ export default function Default() {
           <Tasks />
           <Conversions />
         </SimpleGrid>
+        <SwitchField
+        reversed={true}
+        fontSize="sm"
+        mb="20px"
+        id="2"
+        label="Real Time Monitoring"
+        isChecked={isRealTimePredictionEnabled}
+        onChange={() => setIsRealTimePredictionEnabled((prev) => !prev)}
+      />
       </SimpleGrid>
     </Box>
   );
