@@ -21,16 +21,16 @@ export default function DataTables() {
       text: 'Feature Sans Analysis',
     },
     {
-      src: '/img/EDA/feature_dist.png',
-      text: 'Feature Distribution',
-    },
-    {
       src: '/img/EDA/Feature_C_sans.png',
       text: 'Feature C Sans Analysis',
     },
     {
       src: '/img/EDA/Feature_E_sans.png',
       text: 'Feature E Sans Analysis',
+    },
+    {
+      src: '/img/EDA/feature_dist.png',
+      text: 'Feature Distribution',
     },
     {
       src: '/img/EDA/Feature_U_sans.png',
